@@ -1,0 +1,384 @@
+Exercício 1
+Suponha que o cookie “carrinho” foi criado ao acessar o sistema X. Quando o usuário sair desse sistema, ele deverá ser excluído.
+Programe a eliminação do cookie em PHP.
+<head>
+<title>Exercicio em grupo: Trabalho final da disciplina</title>
+<link rel="stylesheet" type="text/css" href="estilo.css"/>
+</head>
+
+<body>
+<form action="cookie.php" method="POST">
+<center><h1>ENTRAR</h1><center><input type="submit" name="Gerar Cookie" value="Gerar Cookies" class="botao">
+</form>
+</body> 
+</html>
+<?php 
+setcookie("AVgrupos","13",(time() + (3 * 24*360)));
+echo "COOKIES GERADO COM SUCESSO.<p>";
+?>
+<html>
+<head>
+<title>Gerando Cookies</title>
+</head>
+<body>
+<form action="limparcookie.php" method="POST">
+<input type="submit" name="apagar" value="Limpar Cookies" class="botao">
+</form>
+</body> 
+</html>
+body{
+background:#EEDFCC;
+color:#FFB90F;
+font-size:60px;
+} 
+h4{
+color:#FF1493;
+}
+div{
+width:300px;
+padding:25px;
+border:25px solid navy;
+margin:25px;
+}
+input.botao {
+     width: 150px;
+     height: 150px;
+     font-family: verdana;
+     background-color: #E8E8E8;
+}
+<?php 
+setcookie("AVgrupos",null);
+echo "COOKIES APAGADOS!!!";
+?>
+
+Exercício 2
+Uma escola deseja implementar um site que terá acesso restrito a algumas páginas. Existem dois tipos de usuário (aluno e professor) e ambos acessam o sistema por meio de um formulário único, que contém os campos “login” e “senha”, além de um botão de submissão.
+Desenvolva a página verifica.php, que recebe os dados desse formulário e, conforme o tipo de usuário, redireciona-o para a página de acesso restrito correspondente.
+Veja os dados adicionais:
+Login	Senha	Página restrita
+aluno	Aluno	Aluno.php
+professor	Professor	Professor.php
+
+<head>
+<title>Exercicio em grupo: Trabalho final da disciplina - Exercicio 2</title>
+</head>
+
+<body background="principal.jpg">
+<font color="#FFFFFF">
+<form action="verifica.php" method="POST"><br><br>
+<fieldset style="width: 50%; margin: 0px auto;">
+<legend align="center">IDENTIFICACAO DO USUARIO</legend>
+<center><br>
+Login:<input type="text" name="login" required><p>
+Senha:<input type="text" name="senha" required><br><br>
+<input type="radio" name="radio" value="aluno" required> Aluno
+<input type="radio" name="radio" value="professor" required> Professor<br><br>
+ <input type="submit" value="Logar">
+        <h5>*Usar como LOGIN(teste)senha 1234</h5>
+</center>
+    </fieldset>
+</form>
+</font>
+</body>
+</html>
+
+<html>
+<head>
+<title>Portal do Professor.</title>
+</head>
+
+<body bgcolor="#FDF5E6">
+ <center><h1><u>BEM-VINDO AO PORTAL DO PROFESSOR</u></h1>
+<a href=AValunoProf.html><input type="submit" style="margin-top: 1px; margin-left: 1px; margin-right: 1px; " value="Sair"></a>  
+ </center>
+ <fieldset style="width: 50%; margin: 25px auto;">
+<img src="professor.jpg" alt="fundo" />
+ </fieldset>  
+</body>
+</html>
+
+<html>
+<head>
+<title>Portal do Aluno.</title>
+</head>
+
+<body bgcolor="#B0E2FF">
+<center><h1><u>BEM-VINDO AO PORTAL DO ALUNO</u></h1>
+<a href=AValunoProf.html><input type="submit" style="margin-top: 1px; margin-left: 1px; margin-right: 1px; " value="Sair"></a>  
+ </center>
+ <fieldset style="width: 50%; margin: 25px auto;">
+<img src="aluno.jpg" alt="fundo" />
+ </fieldset><
+</body>
+</html>
+
+<html>
+<head>
+<title>Portal do Aluno.</title>
+</head>
+
+<body bgcolor="#B0E2FF">
+<center><h1><u>BEM-VINDO AO PORTAL DO ALUNO</u></h1>
+<a href=AValunoProf.html><input type="submit" style="margin-top: 1px; margin-left: 1px; margin-right: 1px; " value="Sair"></a>  
+ </center>
+ <fieldset style="width: 50%; margin: 25px auto;">
+<img src="aluno.jpg" alt="fundo" />
+ </fieldset><
+</body>
+</html>
+Exercício 3
+Um site deseja que, quando o usuário sair do sistema, seja mostrado o tempo que ele permaneceu conectado, ou seja, a diferença entre o horário em que ele fez o login e o momento em que saiu.
+Sabendo disso, qual(is) comando(s) você adicionaria às páginas: 
+• verifica.php: para que o tempo inicial seja gravado. 
+• sair.php: para que calcule o tempo de permanência na página e o exiba. 
+Considere que as demais implementações (verificação de senha e criação dos mecanismos de acesso restrito) já foram feitas.
+
+
+Exercício 4
+Desenvolva em PHP uma página que liste todos os arquivos, por ordem alfabética, contidos na pasta Arquivos.
+<?php
+    // Abre um diretorio conhecido, e faz a leitura de seu conteudo
+    $pasta = '/Arquivos/'
+    if (is_dir($pasta)) {
+    ?>
+  <select name="imglist" size="15" class="input" style="width: 150px;">
+  <?php
+        if ($dh = opendir($pasta)) {
+            //lê o diretorio
+            while (($file = readdir($dh)) !== false) {
+                //se for arquivo (para não aparecer diretorio)
+                if (is_file($pasta.$file)){
+                //Cria um array com a lista de imagens. Dentro tem outro
+array que primeiro pega a data do arquivo e em segundo pega o nome do
+arquivo.
+                $resultado[strtolower($file)] =
+array(date('YmdHis',filemtime($pasta.$file)),$file);
+                }
+            }
+            //fecha diretorio
+            closedir($dh);
+
+            //ordena o resultado
+            rsort($resultado);
+            //loop dos resultados
+            foreach($resultado as $valor) {
+
+            ?>
+            <option value="<?php echo $valor[1]; //imprime no nome do
+arquivo ?>"><?php echo $valor[1]; //imprime o nome do arquivo  ?></option>
+           <?php
+            }
+        }
+    ?>
+    </select>
+    <?php
+    }
+  ?>
+
+Exercício 5
+Desenvolva em PHP uma página que liste todos os arquivos, por ordem crescente de tamanho (em bytes), contidos na pasta Arquivos.
+<?php
+$meuArray = array();
+$path = "Arquivos/";
+
+foreach (new DirectoryIterator($path) as $fileInfo) {
+    if($fileInfo->isDot()) continue;
+    $arrayPaths[] = ["bytes" => $fileInfo->getSize(),"file_name" => $fileInfo->getFilename()];
+}
+
+//opção 1:
+//array_multisort($arrayPaths, SORT_ASC);
+
+// opção 2:
+// function sortBytesAsc($a, $b) {
+//     return $a['bytes'] > $b['bytes'];
+// }
+// usort($arrayPaths, 'sortBytesAsc');
+
+//opção 3:
+sort($arrayPaths);
+
+
+echo "<pre>";
+print_r($arrayPaths);
+echo "</pre>";
+?>
+
+Exercício 6
+Desenvolva em PHP uma página que liste os arquivos da pasta Documentos. Essa página deverá permitir a visualização dos dados: nome, extensão, tamanho e data de modificação.
+<?php
+$meuArray = array();
+   
+foreach(glob('Documentos/*') as $file){
+   $meuArray['Última modificação: '.date('Y/m/d H:i:s', filemtime($file))] = '- Nome do arquivo: '.$file.' - Tamanho: '.filesize($file).' bytes';
+}
+
+print "<pre><h4>";
+echo str_replace('Array','',print_r($meuArray,true));
+?>
+
+Exercício 7
+Considere que você tem uma página chamada alunos.php, que contém um array $ alunos com o nome de vários estudantes. Essa página, ao receber por GET a variável “letra”, deverá exibir apenas o nome dos alunos, em ordem alfabética, cuja inicial for a letra indicada. Se não houver alunos com a letra informada, a página deverá exibir a mensagem: “Não há alunos com essa letra”. Se a variável “letra” não for informada, a página deverá exibir a mensagem: “É necessário informar a letra”.
+
+<?php
+
+header('Content-Type: text/html; charset=utf-8');
+
+
+if(!empty($_GET['letra'])){
+
+	$getLetra = $_GET['letra'];
+
+	$alunos = array(
+	"Angel",
+	"Antonio",
+	"Alice",
+	"Bruna",
+	"Beatriz",
+	"Caroline",
+	"Clara",
+	"Danilo",
+	"Daiane",
+	"Ernesto",
+	"Marcos"
+	);
+
+	echo "A letra para o filtro dos nomes foi: " . $getLetra . "</br></br>";
+
+	foreach($alunos as $nome) {
+		
+		if(strtolower(substr($nome, 0, 1)) == strtolower($getLetra)){
+			$alunos_encontrados[] = $nome;
+		}
+	}
+	if(isset($alunos_encontrados)){
+		sort($alunos_encontrados);
+		echo "<pre>";
+		print_r($alunos_encontrados);
+		echo "</pre>";
+	} else {
+		echo "Não existem alunos com essa letra";
+	}
+}	
+?>
+<title>Alunos</title>
+<form method="GET">
+    Digite uma letra: <input name="letra" type="text"><br>
+<input ty
+
+Exercício 8
+Dado um formulário POST com um campo de busca, que é submetido à página busca.php, implemente-a considerando a seguinte regra: se a palavra digitada constar em um array de palavras, a página deverá retornar as posições em que a palavra encontra-se.
+
+if(!empty($_POST['busca'])){
+    $getBusca = $_POST['busca'];
+    $palavras = array(
+        "Celular",
+        "Computador",
+        "Lápis",
+        "Carteira",
+        "Jaqueta",
+        "Onibus"
+    );
+    echo "A palavra-chave usada na busca foi: " . $getBusca . "<br><br>";
+
+    foreach($palavras as $key => $value) {
+        if((strtolower($value)) == strtolower($getBusca)) {
+            $resultado_final[$value] = "Posição: " . $key;
+        }
+    }
+    if(isset($resultado_final)){
+        echo "<pre>";
+        print_r($resultado_final);
+        echo "<pre>";
+    } else {
+        echo "Você não digitou nenhuma palavra chave para buscar!";
+    }
+}
+?>
+<title>Exercício 8</title>
+<form method="POST">
+    Busca: <input name="busca" type="text"><br>
+<input type="submit">
+</form>
+
+Exercício 9
+Dado um array com o nome das capitanias hereditárias, exiba-os em ordem ascendente ou descendente. Para isso, ao lado do cabeçalho da tabela, coloque dois links: um indicando para cima e outro, para baixo. Ao clicar “para cima” ou quando não houver indicação, os nomes deverão ser exibidos alfabeticamente; ao clicar para baixo, a exibição deverá ser invertida.
+<?php
+$capitanias = array(
+    "CAPITANIAS MARANHÃO",
+    "CAPITANIA CEARÁ",
+    "CAPITANIA RIO GRANDE",
+    "CAPITANIA ITAMARACÁ",
+    "CAPITANIA PERNAMBUCO",
+    "CAPITANIA BAHIA",
+    "CAPITANIA ILHÉUS",
+    "CAPITANIA PORTO SEGURO",
+    "CAPITANIA ESPIRITO SANTO",
+    "CAPITANIA SÃO TOMÉ",
+    "CAPITANIA RIO DE JANEIRO",
+    "CAPITANIA SANTO AMARO",
+    "CAPITANIA SÃO VICENTE",
+    "CAPITANIA SANTANA"
+);
+
+//foreach ($capitanias as $lista) {
+//    echo $lista . "<br>";
+//}
+
+?>
+<html>
+    <body>
+        <title>Capitanias</title>
+            <table border="1px">
+                <tr>
+                    <th>
+                        Capitanias
+                <pre><a href="exibir.php?ordem=ascendente">Para Cima</a></pre>
+                <pre><a href="exibir.php?ordem=descendente">Para Baixo</a></pre>
+                    </th>
+                </tr>
+                <?php foreach ($capitanias as $lista) { ?>
+                <tr>
+                    <th><?php echo $lista;?></th>
+                </tr>
+                <?php } ?>
+            </table>
+        </body>
+</html>
+Exercício 10
+Considere que você tem uma página chamada cidades.php, que contém um array $ cidades da seguinte forma:
+
+<?php
+$cidades["PR"][] = "Curitiba";
+$cidades["PR"][] = "Londrina";
+$cidades["PR"][] = "Pinhais";
+$cidades["SC"][] = "Florianópolis";
+?>
+
+Essa página, ao receber por GET a variável “estado”, deverá exibir apenas o nome das cidades, em ordem alfabética, que pertencerem ao estado. Se não houver cidades do estado informado, deverá exibir a mensagem: “Não há cidades desse estado”. Se a variável “estado” não for informada, a página deverá exibir todas as cidades no seguinte formato: “Cidade – Sigla do Estado”, ordenadas alfabeticamente por estado e cidade.
+<?php
+
+header('Content-Type: text/html; charset=utf-8');
+$cidades["PR"][] = "Curitiba";
+$cidades["PR"][] = "Londrina";
+$cidades["PR"][] = "Pinhais";
+$cidades["SC"][] = "Florianópolis";
+
+if(!empty($_GET['estado'])){
+    $getEstado = strtoupper($_GET['estado']);
+    echo "Estado consultado: ".$getEstado."<br><br>";
+    if(isset($cidades[$getEstado])){
+
+    	foreach ($cidades[$getEstado] as $chave => $valor) {
+        	echo "$chave: $valor \n";
+    	}
+    }else{
+    	echo "Não há cidades do estado informado.";
+    }
+
+
+} else {
+    echo "Você precisa inserir um UF em 'estado'";
+}
+
+?>
